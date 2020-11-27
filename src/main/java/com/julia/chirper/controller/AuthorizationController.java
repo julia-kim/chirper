@@ -20,7 +20,8 @@ public class AuthorizationController {
 	private UserService userService;
 
 	@GetMapping(value = "/login")
-	public String login() {
+	public String login(Model model) {
+		model.addAttribute("title", "Login");
 		return "login";
 	}
 
@@ -28,6 +29,7 @@ public class AuthorizationController {
 	public String registration(Model model) {
 		User user = new User();
 		model.addAttribute("user", user);
+		model.addAttribute("title", "Signup");
 		return "registration";
 	}
 
@@ -41,6 +43,7 @@ public class AuthorizationController {
 			userService.saveNewUser(user);
 			model.addAttribute("success", "Sign up successful!");
 			model.addAttribute("user", new User());
+			model.addAttribute("title", "Signup Success");
 		}
 		return "registration";
 	}

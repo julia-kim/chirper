@@ -48,8 +48,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.headers().frameOptions().disable();
 	}
 
+	// allows static resources to be neglected by Spring Security
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
+		web.ignoring().antMatchers("/resources/**", "/static/**", "/webjars/**", "/css/**", "/js/**", "/images/**");
 	}
+	
 }
