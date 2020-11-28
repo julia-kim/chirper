@@ -15,7 +15,6 @@ import com.julia.chirper.service.UserService;
 
 @Controller
 public class AuthorizationController {
-
 	@Autowired
 	private UserService userService;
 
