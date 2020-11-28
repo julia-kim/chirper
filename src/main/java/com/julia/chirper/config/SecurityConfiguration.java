@@ -40,7 +40,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/console/**").permitAll().antMatchers("/login").permitAll()
 				.antMatchers("/signup").permitAll().antMatchers("/custom.js").permitAll().antMatchers("/custom.css")
 				.permitAll().antMatchers().hasAuthority("USER").anyRequest().authenticated().and().csrf().disable()
-				.formLogin().loginPage("/login").failureUrl("/login?error=true").defaultSuccessUrl("/tweets")
+				.formLogin().loginPage("/login").failureUrl("/login?error=true").defaultSuccessUrl("/chirps")
 				.usernameParameter("username").passwordParameter("password").and().logout()
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login").and()
 				.exceptionHandling();
