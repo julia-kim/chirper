@@ -1,5 +1,6 @@
 package com.julia.chirper.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,26 +35,28 @@ public class UserController {
                 isFollowing = true;
             }
         }
+        boolean isSelfPage = loggedInUser.getUsername().equals(username);
+        model.addAttribute("isSelfPage", isSelfPage);
         model.addAttribute("following", isFollowing);
         model.addAttribute("chirpList", chirps);
         model.addAttribute("user", user);
         return "user";
     }
 	
-//	@GetMapping(value = "/users")
-//	public String getUsers(Model model) {
-//	    List<User> users = userService.findAll();
-//	    model.addAttribute("users", users);
-//	    SetChirpCounts(users, model);
-//	    return "users";
-//	}
-//	
-//	private void SetChirpCounts(List<User> users, Model model) {
-//	    HashMap<String,Integer> chirpCounts = new HashMap<>();
-//	    for (User user : users) {
-//	        List<Chirp> chirps = chirpService.findAllByUser(user);
-//	        chirpCounts.put(user.getUsername(), chirps.size());
-//	    }
-//	    model.addAttribute("chirpCounts", chirpCounts);
-//	}
+	@GetMapping(value = "/users")
+	public String getUsers(Model model) {
+	    List<User> users = userService.findAll();
+	    model.addAttribute("users", users);
+	    SetChirpCounts(users, model);
+	    return "users";
+	}
+	
+	private void SetChirpCounts(List<User> users, Model model) {
+	    HashMap<String,Integer> chirpCounts = new HashMap<>();
+	    for (User user : users) {
+	        List<Chirp> chirps = chirpService.findAllByUser(user);
+	        chirpCounts.put(user.getUsername(), chirps.size());
+	    }
+	    model.addAttribute("chirpCounts", chirpCounts);
+	}
 }
