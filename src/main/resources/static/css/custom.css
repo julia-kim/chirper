@@ -1,8 +1,62 @@
+/* ========
+    GLOBAL 
+   ======== */
 *,
 html {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+body {
+  height: 100vh;
+}
+
+/* =========
+    GENERAL 
+   ========= */
+.bg-blue {
+  background-color: #1da1f2;
+  color: white;
+}
+
+.w-380 {
+  max-width: 380px;
+}
+
+/* ============
+    TYPOGRAPHY 
+   ============ */
+.h1, .h2, .h3, .h4 {
+  font-weight: 700;
+}
+
+.h2 {
+  font-size: 1.875rem;
+}
+
+.h3 {
+  font-size: 1.5rem;
+}
+
+.h4 {
+  font-size: 1.125rem;
+}
+
+/* =======
+    FORMS
+   ======= */
+.form-container {
+  padding: 15px;
+  width: 600px;
+}
+
+/* =========
+    BUTTONS 
+   ========= */
+.btn-chirper {
+  border-radius: 999px;
+  font-weight: 700;
 }
 
 /*# sourceMappingURL=custom.css.map */

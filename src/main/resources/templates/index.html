@@ -2,7 +2,36 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
   <head th:replace="fragments/components :: head"></head>
   <body>
-    <div th:replace="fragments/components :: header"/>
+    <div class="row h-100">
+      <div class="col d-flex flex-column justify-content-center align-items-center bg-blue">
+        <div class="w-380">
+          <h4 class="h4 mb-5">
+            <i class="fas fa-search d-inline-block"></i>
+            <span class="pl-3">Follow your interests.</span>
+          </h4>
+          <h4 class="h4 mb-5"> 
+            <i class="fas fa-user-friends d-inline-block"></i><!--
+            --><span class="pl-3">Hear what people are talking about.</span>
+          </h4>
+          <h4 class="h4 mb-5">
+            <i class="far fa-comment d-inline-block"></i>
+            <span class="pl-3">Join the conversation.</span>
+          </h4>
+        </div>
+      </div>
+      <div class="col d-flex flex-column justify-content-center align-items-center">
+        <div class="w-380">
+          <h2 class="h2">See what's happening in the world right now</h2>
+          <strong class="d-block mt-5 mb-3">Join Chirper today.</strong>
+          <a th:href="@{/signup}">
+            <button class="btn btn-primary btn-block btn-chirper">Sign up</button>
+          </a>
+          <a th:href="@{/login}">
+            <button class="btn btn-primary btn-block btn-chirper mt-3">Log in</button>
+          </a>
+        </div>
+      </div>
+    </div>
     <div th:replace="fragments/components :: footer"/>
     <div th:replace="fragments/components :: scripts"/>
   </body>

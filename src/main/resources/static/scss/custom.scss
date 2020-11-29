@@ -7,6 +7,9 @@ $extra-light-grey: rgb(225, 232, 237);
 $extra-extra-light-grey: rgb(245, 248, 250);
 $white: rgb(255, 255, 255);
 
+/* ========
+    GLOBAL 
+   ======== */
 *,
 html {
   box-sizing: border-box;
@@ -15,5 +18,56 @@ html {
 }
 
 body {
+  height: 100vh;
+}
 
+/* =========
+    GENERAL 
+   ========= */
+
+.bg-blue {
+  background-color: $brand-primary;
+  color: $white;
+}
+
+.w-380 { 
+	max-width: 380px;
+}
+
+/* ============
+    TYPOGRAPHY 
+   ============ */
+
+.h1, .h2, .h3, .h4 {
+  font-weight: 700;
+}
+
+.h2 {
+  font-size: 1.875rem;
+}
+
+.h3 {
+  font-size: 1.5rem;
+}
+
+.h4 {
+  font-size: 1.125rem;
+}
+
+/* =======
+    FORMS
+   ======= */
+
+.form-container {
+  padding: 15px;
+  width: 600px;
+}
+
+/* =========
+    BUTTONS 
+   ========= */
+
+.btn-chirper {
+  border-radius: 999px;
+  font-weight: 700;
 }
