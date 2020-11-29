@@ -17,6 +17,12 @@ import com.julia.chirper.service.UserService;
 public class AuthorizationController {
 	@Autowired
 	private UserService userService;
+	
+	@GetMapping(value = "/")
+	public String landing(Model model) {
+		model.addAttribute("title", "Chirper");
+		return "index";
+	}
 
 	@GetMapping(value = "/login")
 	public String login(Model model) {

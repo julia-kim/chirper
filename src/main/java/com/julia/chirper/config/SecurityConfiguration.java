@@ -38,7 +38,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.authorizeRequests().antMatchers("/console/**").permitAll().antMatchers("/login").permitAll()
-				.antMatchers("/signup").permitAll().antMatchers("/custom.js").permitAll().antMatchers("/custom.css")
+				.antMatchers("/signup").permitAll().antMatchers("/").permitAll().antMatchers("/custom.js").permitAll().antMatchers("/custom.css")
 				.permitAll().antMatchers().hasAuthority("USER").anyRequest().authenticated().and().csrf().disable()
 				.formLogin().loginPage("/login").failureUrl("/login?error=true").defaultSuccessUrl("/chirps")
 				.usernameParameter("username").passwordParameter("password").and().logout()
