@@ -1,5 +1,6 @@
 package com.julia.chirper.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -11,10 +12,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.julia.chirper.model.Chirp;
 import com.julia.chirper.model.ChirpDisplay;
+import com.julia.chirper.model.Tag;
 import com.julia.chirper.model.User;
+import com.julia.chirper.repository.TagRepository;
 import com.julia.chirper.service.ChirpService;
 import com.julia.chirper.service.UserService;
 
@@ -25,14 +29,28 @@ public class ChirpController {
 
 	@Autowired
 	private ChirpService chirpService;
-
-	@GetMapping(value = {"/home"})
-	public String getFeed(Model model) {
-		List<ChirpDisplay> chirps = chirpService.findAll();
-		model.addAttribute("chirpList", chirps);
-		model.addAttribute("title", "Chirper");
-		return "feed";
-	}
+	
+	@Autowired
+	private TagRepository tagRepository;
+	
+	@GetMapping(value = { "/home"})
+    public String getFeed(@RequestParam(value = "filter", required = false) String filter, Model model) {
+        User loggedInUser = userService.getLoggedInUser();
+        List<ChirpDisplay> chirps = new ArrayList<>();
+        if (filter == null) {
+            filter = "all";
+        }
+        if (filter.equalsIgnoreCase("following")) {
+            List<User> following = loggedInUser.getFollowing();
+            chirps = chirpService.findAllByUsers(following);
+            model.addAttribute("filter", "following");
+        } else {
+            chirps = chirpService.findAll();
+            model.addAttribute("filter", "all");
+        }
+        model.addAttribute("chirpList", chirps);
+        return "feed";
+    }
 
 	@GetMapping(value = "/new")
 	public String getChirpForm(Model model) {
@@ -62,4 +80,11 @@ public class ChirpController {
 	    model.addAttribute("title", "#" + tag + " | Chirper");
 	    return "tagged";
 	}
+	
+	@GetMapping(value = "/tags")
+    public String getTags(Model model) {
+    	List<Tag> tag = (List<Tag>)tagRepository.findAll();
+    	model.addAttribute("tagList", tag);
+    	return "tags";
+    }
 }
