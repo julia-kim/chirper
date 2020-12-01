@@ -42,9 +42,9 @@ public class Chirp {
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private User user;
 
-//	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-//	@JoinTable(name = "chirp_tag", joinColumns = @JoinColumn(name = "chirp_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
-//	private List<Tag> tags;
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinTable(name = "chirp_tag", joinColumns = @JoinColumn(name = "chirp_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
+	private List<Tag> tags;
 
 	@NotEmpty(message = "Chirp cannot be empty")
 	@Length(max = 280, message = "Chirp cannot have more than 280 characters")
