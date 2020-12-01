@@ -11,8 +11,8 @@
 				<div class="list-group-item list-group-item-action">
 					<div class="d-flex w-100 justify-content-between">
 						<a class="username" th:href="@{/users/} + ${chirp.user.username}">@<span
-							th:text="${chirp.user.username}"></span></a><small> <span
-							th:text="${#dates.format(chirp.createdAt, 'M/d/yy')}"></span></small>
+							th:text="${chirp.user.username}"></span></a>
+						<small th:text="${chirp.date}"></small>
 					</div>
 					<p class="mb-1" th:utext="${chirp.message}"></p>
 				</div>

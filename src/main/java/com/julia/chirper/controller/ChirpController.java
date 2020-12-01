@@ -9,9 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.julia.chirper.model.Chirp;
+import com.julia.chirper.model.ChirpDisplay;
 import com.julia.chirper.model.User;
 import com.julia.chirper.service.ChirpService;
 import com.julia.chirper.service.UserService;
@@ -24,17 +26,19 @@ public class ChirpController {
 	@Autowired
 	private ChirpService chirpService;
 
-	@GetMapping(value = {"/chirps", "/"})
+	@GetMapping(value = {"/home"})
 	public String getFeed(Model model) {
-		List<Chirp> chirps = chirpService.findAll();
+		List<ChirpDisplay> chirps = chirpService.findAll();
 		model.addAttribute("chirpList", chirps);
+		model.addAttribute("title", "Chirper");
 		return "feed";
 	}
 
-	@GetMapping(value = "/chirps/new")
+	@GetMapping(value = "/new")
 	public String getChirpForm(Model model) {
 		model.addAttribute("chirp", new Chirp());
-		return "newChirp";
+		model.addAttribute("title", "New Chirp | Chirper");
+		return "new";
 	}
 
 	@PostMapping(value = "/chirps")
@@ -45,7 +49,17 @@ public class ChirpController {
 			chirpService.save(chirp);
 			model.addAttribute("successMessage", "Chirp successfully created!");
 			model.addAttribute("chirp", new Chirp());
+			model.addAttribute("title", "New Chirp | Chirper");
 		}
-		return "newChirp";
+		return "new";
+	}
+	
+	@GetMapping(value = "/tags/{tag}")
+	public String getChirpsByTag(@PathVariable(value="tag") String tag, Model model) {
+	    List<ChirpDisplay> chirps = chirpService.findAllWithTag(tag);
+	    model.addAttribute("chirpList", chirps);
+	    model.addAttribute("tag", tag);
+	    model.addAttribute("title", "#" + tag + " | Chirper");
+	    return "tagged";
 	}
 }

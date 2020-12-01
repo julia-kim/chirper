@@ -1,16 +1,21 @@
 package com.julia.chirper.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.ocpsoft.prettytime.PrettyTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.julia.chirper.model.Chirp;
+import com.julia.chirper.model.ChirpDisplay;
 import com.julia.chirper.model.Tag;
 import com.julia.chirper.model.User;
 import com.julia.chirper.repository.ChirpRepository;
@@ -25,19 +30,24 @@ public class ChirpService {
 	@Autowired
 	private TagRepository tagRepository;
 
-	public List<Chirp> findAll() {
+	public List<ChirpDisplay> findAll() {
 		List<Chirp> chirps = chirpRepository.findAllByOrderByCreatedAtDesc();
 		return formatChirps(chirps);
 	}
 
-	public List<Chirp> findAllByUser(User user) {
+	public List<ChirpDisplay> findAllByUser(User user) {
 		List<Chirp> chirps = chirpRepository.findAllByUserOrderByCreatedAtDesc(user);
-		return chirps;
+		return formatChirps(chirps);
 	}
 
-	public List<Chirp> findAllByUsers(List<User> users) {
+	public List<ChirpDisplay> findAllByUsers(List<User> users) {
 		List<Chirp> chirps = chirpRepository.findAllByUserInOrderByCreatedAtDesc(users);
-		return chirps;
+		return formatChirps(chirps);
+	}
+	
+	public List<ChirpDisplay> findAllWithTag(String tag) {
+		List<Chirp> chirps = chirpRepository.findByTags_PhraseOrderByCreatedAtDesc(tag);
+		return formatChirps(chirps);
 	}
 
 	public void save(Chirp chirp) {
@@ -45,9 +55,11 @@ public class ChirpService {
 		chirpRepository.save(chirp);
 	}
 
-	public List<Chirp> findAllWithTag(String tag) {
-		List<Chirp> chirps = chirpRepository.findByTags_PhraseOrderByCreatedAtDesc(tag);
-		return formatChirps(chirps);
+	private List<ChirpDisplay> formatChirps(List<Chirp> chirps) {
+		addTagLinks(chirps);
+		shortenLinks(chirps);
+		List<ChirpDisplay> displayChirps = formatTimestamps(chirps);
+		return displayChirps;
 	}
 
 	private void handleTags(Chirp chirp) {
@@ -66,13 +78,7 @@ public class ChirpService {
 		}
 		chirp.setTags(tags);
 	}
-
-	private List<Chirp> formatChirps(List<Chirp> chirps) {
-		addTagLinks(chirps);
-		shortenLinks(chirps);
-		return chirps;
-	}
-
+	
 	private void addTagLinks(List<Chirp> chirps) {
 		Pattern pattern = Pattern.compile("#\\w+");
 		for (Chirp chirp : chirps) {
@@ -108,4 +114,27 @@ public class ChirpService {
 
 		}
 	}
+
+	private List<ChirpDisplay> formatTimestamps(List<Chirp> chirps) {
+		List<ChirpDisplay> response = new ArrayList<>();
+		PrettyTime prettyTime = new PrettyTime();
+		SimpleDateFormat simpleDate = new SimpleDateFormat("M/d/yy");
+		Date now = new Date();
+		for (Chirp chirp : chirps) {
+			ChirpDisplay chirpDisplay = new ChirpDisplay();
+			chirpDisplay.setUser(chirp.getUser());
+			chirpDisplay.setMessage(chirp.getMessage());
+			chirpDisplay.setTags(chirp.getTags());
+			long diffInMillies = Math.abs(now.getTime() - chirp.getCreatedAt().getTime());
+			long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+			if (diff > 3) {
+				chirpDisplay.setDate(simpleDate.format(chirp.getCreatedAt()));
+			} else {
+				chirpDisplay.setDate(prettyTime.format(chirp.getCreatedAt()));
+			}
+			response.add(chirpDisplay);
+		}
+		return response;
+	}
+
 }

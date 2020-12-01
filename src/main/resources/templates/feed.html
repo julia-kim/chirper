@@ -15,8 +15,10 @@
 		</p>
       </div>
       <div th:each="chirp:${chirpList}">
-        <h5>@<span th:text="${chirp.user.username}"></span>
-        <small><span th:text="${#dates.format(chirp.createdAt, 'M/d/yy')}"></span></small></h5>
+        <h5>
+          @<span th:text="${chirp.user.username}"></span>
+          <small th:text="${chirp.date}"></small>
+        </h5>
         <p th:utext="${chirp.message}"></p>
       </div>
     </div>
