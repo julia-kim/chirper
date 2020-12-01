@@ -3,6 +3,9 @@ package com.julia.chirper.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,14 +22,18 @@ public class AuthorizationController {
 	private UserService userService;
 	
 	@GetMapping(value = "/")
-	public String landing(Model model) {
-		model.addAttribute("title", "Chirper");
-		return "index";
+	public String landing(Model model) throws Exception {
+	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    if (!(auth instanceof AnonymousAuthenticationToken)) {
+	        return "redirect:/home";
+	    }
+	    model.addAttribute("title", "Chirper");
+	    return "index";
 	}
 
 	@GetMapping(value = "/login")
 	public String login(Model model) {
-		model.addAttribute("title", "Login");
+		model.addAttribute("title", "Login | Chirper");
 		return "login";
 	}
 
@@ -34,7 +41,7 @@ public class AuthorizationController {
 	public String registration(Model model) {
 		User user = new User();
 		model.addAttribute("user", user);
-		model.addAttribute("title", "Signup");
+		model.addAttribute("title", "Signup | Chirper");
 		return "registration";
 	}
 
@@ -48,7 +55,7 @@ public class AuthorizationController {
 			userService.saveNewUser(user);
 			model.addAttribute("success", "Sign up successful!");
 			model.addAttribute("user", new User());
-			model.addAttribute("title", "Signup Success");
+			model.addAttribute("title", "Signup Success | Chirper");
 		}
 		return "registration";
 	}
