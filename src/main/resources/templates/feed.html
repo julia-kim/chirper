@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+  <head th:replace="fragments/components :: head"></head>
+  <body>
+    <div th:replace="fragments/components :: header"></div>
+    <div class="container">
+      <h2>Chirps</h2>
+      <div class="user-avatar-bg">
+        <i class="fas fa-user fa-7x user-avatar"></i>
+      </div>
+      <div align="center" th:if="${chirpList.isEmpty()}">
+	    <p>
+	      <strong class="d-block">@user hasn&#39;t Chirped yet</strong>
+		  When they do, their Chirps will show up here.
+		</p>
+      </div>
+      <div th:each="chirp:${chirpList}">
+        <h5>@<span th:text="${chirp.user.username}"></span>
+        <small><span th:text="${#dates.format(chirp.createdAt, 'M/d/yy')}"></span></small></h5>
+        <p th:utext="${chirp.message}"></p>
+      </div>
+    </div>
+    <div th:replace="fragments/components :: footer"/>
+    <div th:replace="fragments/components :: scripts"/>
+  </body>
+</html>
