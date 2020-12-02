@@ -11,6 +11,8 @@ $white: rgb(255, 255, 255);
     GLOBAL 
    ======== */
 *,
+*::before,
+*::after,
 html {
   box-sizing: border-box;
   margin: 0;
@@ -30,20 +32,92 @@ body {
   color: $white;
 }
 
-.w-380 { 
-	max-width: 380px;
+.w-380 {
+  max-width: 380px;
+}
+
+a.username {
+  color: #00aced;
+}
+
+a.tag {
+  color: #0084b4;
+}
+
+.container {
+  padding: 0;
+}
+
+/* ============
+    NAVIGATION 
+   ============ */
+
+.navbar-brand {
+  color: $brand-primary;
+  font-weight: 800;
+}
+
+.nav-link {
+  color: $black;
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+/* ============
+    LIST GROUP 
+   ============ */
+
+.nav-tabs {
+  border: 0;
+  margin-bottom: 0;
+
+  .nav-item {
+    &:hover {
+      background: rgba($brand-primary, 0.1);
+    }
+  }
+
+  .nav-link {
+    border: 0;
+    border-radius: 0;
+    color: $dark-grey;
+    font-weight: 700;
+
+    &.active {
+      border-bottom: 3px solid $brand-primary;
+      color: $brand-primary;
+    }
+
+    &:hover {
+      background: rgba($brand-primary, 0.1);
+      color: $brand-primary;
+    }
+  }
+}
+
+.list-group {
+  border-radius: 0;
+  padding: 0;
+}
+
+.list-group-item {
+  border-radius: 0;
 }
 
 /* ============
     TYPOGRAPHY 
    ============ */
 
-.h1, .h2, .h3, .h4 {
+.h1,
+.h2,
+.h3,
+.h4 {
   font-weight: 700;
 }
 
 .h2 {
   font-size: 1.875rem;
+  line-height: 1.3125;
 }
 
 .h3 {
@@ -70,4 +144,42 @@ body {
 .btn-chirper {
   border-radius: 999px;
   font-weight: 700;
+}
+
+/* ==============
+    USER PROFILE 
+   ============== */
+.banner {
+  background-color: #1da1f2;
+  height: 12.5rem;
+}
+
+.banner-bar {
+  background-color: $white;
+  height: 50px;
+  position: relative;
+}
+
+.user-avatar-bg {
+  background-color: #e1e8ed;
+  border: 4px solid white;
+  border-radius: 50%;
+  bottom: 0;
+  color: #657786;
+  height: 150px;
+  overflow: hidden;
+  position: absolute;
+  left: 15px;
+  text-align: center;
+  width: 150px;
+}
+
+.user-avatar {
+  line-height: normal;
+  vertical-align: -90%;
+}
+
+.user-details {
+  color: $dark-grey;
+  display: block;
 }
