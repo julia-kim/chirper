@@ -104,6 +104,27 @@ a.tag {
   border-radius: 0;
 }
 
+/* ======
+    CARD 
+   ====== */
+
+.card {
+  width: 33.750rem;
+}
+
+.card-header {
+  background-color: $white;
+  color: $dark-grey;
+}
+
+.card-body {
+  background-color: rgba($brand-primary, 0.1);
+}
+
+textarea.form-control {
+  border-color: $brand-primary;
+}
+
 /* ============
     TYPOGRAPHY 
    ============ */
@@ -111,8 +132,13 @@ a.tag {
 .h1,
 .h2,
 .h3,
-.h4 {
+.h4,
+.h5 {
   font-weight: 700;
+}
+
+.h6 {
+  font-weight: 600;
 }
 
 .h2 {
