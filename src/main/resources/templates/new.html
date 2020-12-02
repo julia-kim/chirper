@@ -1,26 +1,31 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
   <head th:replace="fragments/components :: head"></head>
   <body>
     <div th:replace="fragments/components :: header"></div>
-    <div class="container">
-      <div class="jumbotron col-md-8 col-md-offset-2">
-        <h2>New Chirp</h2><br/>
-        <form th:action="@{/chirps}" th:object="${chirp}" method="post" autocomplete="off">
-          <div class="form-group">
-            <textarea rows="5" th:field="*{message}" placeholder="What's happening?" class="form-control"></textarea>
-            <label th:if="${#fields.hasErrors('message')}" th:errors="*{message}" class="validation-message"></label>	
-          </div>
-          <div class="form-group">
-            <button class="btn btn-md btn-success btn-block" name="Submit" value="Submit" type="Submit">Chirp it!</button>
-          </div>
-        </form>
+    <div class="container d-flex h-75">
+      <div class="card mx-auto align-self-center">
+        <div class="card-header">
+          <h6 class="h6 card-title text-center mb-0">Compose new Chirp</h6>
+        </div>
+        <div class="card-body">
+          <form th:action="@{/chirps}" th:object="${chirp}" method="post" autocomplete="off">
+            <div class="form-group">
+              <textarea rows="5" th:field="*{message}" placeholder="What's happening?" class="form-control"></textarea>
+              <label th:if="${#fields.hasErrors('message')}" th:errors="*{message}" class="validation-message"></label>	
+            </div>
+            <div class="form-group">
+              <button class="btn btn-primary float-right" name="Submit" value="Submit" type="Submit">
+                <i class="fas fa-feather-alt"></i> Chirp
+              </button>
+            </div>
+          </form>
+        </div>
         <div th:if="${successMessage}">
           <h3><span class="text-success" th:utext="${successMessage}"></span></h3>
         </div> 
       </div>
     </div>
-    <div th:replace="fragments/components :: footer"/>
     <div th:replace="fragments/components :: scripts"/>
   </body>
 </html>
