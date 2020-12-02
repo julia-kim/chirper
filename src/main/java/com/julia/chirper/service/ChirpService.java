@@ -44,7 +44,7 @@ public class ChirpService {
 		List<Chirp> chirps = chirpRepository.findAllByUserInOrderByCreatedAtDesc(users);
 		return formatChirps(chirps);
 	}
-	
+
 	public List<ChirpDisplay> findAllWithTag(String tag) {
 		List<Chirp> chirps = chirpRepository.findByTags_PhraseOrderByCreatedAtDesc(tag);
 		return formatChirps(chirps);
@@ -78,7 +78,7 @@ public class ChirpService {
 		}
 		chirp.setTags(tags);
 	}
-	
+
 	private void addTagLinks(List<Chirp> chirps) {
 		Pattern pattern = Pattern.compile("#\\w+");
 		for (Chirp chirp : chirps) {

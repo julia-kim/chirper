@@ -15,20 +15,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.julia.chirper.model.User;
 import com.julia.chirper.service.UserService;
 
-
 @Controller
 public class AuthorizationController {
 	@Autowired
 	private UserService userService;
-	
+
 	@GetMapping(value = "/")
 	public String landing(Model model) throws Exception {
-	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	    if (!(auth instanceof AnonymousAuthenticationToken)) {
-	        return "redirect:/home";
-	    }
-	    model.addAttribute("title", "Chirper");
-	    return "index";
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (!(auth instanceof AnonymousAuthenticationToken)) {
+			return "redirect:/home";
+		}
+		model.addAttribute("title", "Chirper");
+		return "index";
 	}
 
 	@GetMapping(value = "/login")
@@ -59,5 +58,4 @@ public class AuthorizationController {
 		}
 		return "registration";
 	}
-
 }

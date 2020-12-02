@@ -25,28 +25,29 @@ public class UserController {
 
 	@Autowired
 	private ChirpService chirpService;
-	
+
 	@GetMapping(value = "/users/{username}")
-    public String getUser(@PathVariable(value = "username") String username, Model model) {
-        User loggedInUser = userService.getLoggedInUser();
-        User user = userService.findByUsername(username);
-        List<ChirpDisplay> chirps = chirpService.findAllByUser(user);
-        List<User> following = loggedInUser.getFollowing();
-        boolean isFollowing = false;
-        for (User followedUser : following) {
-            if (followedUser.getUsername().equals(username)) {
-                isFollowing = true;
-            }
-        }
-        boolean isSelfPage = loggedInUser.getUsername().equals(username);
-        model.addAttribute("isSelfPage", isSelfPage);
-        model.addAttribute("following", isFollowing);
-        model.addAttribute("chirpList", chirps);
-        model.addAttribute("user", user);
-        model.addAttribute("title", user.getFirstName() + " " + user.getLastName() + " (@" + user.getUsername() + ") | Chirper");
-        return "user";
-    }
-	
+	public String getUser(@PathVariable(value = "username") String username, Model model) {
+		User loggedInUser = userService.getLoggedInUser();
+		User user = userService.findByUsername(username);
+		List<ChirpDisplay> chirps = chirpService.findAllByUser(user);
+		List<User> following = loggedInUser.getFollowing();
+		boolean isFollowing = false;
+		for (User followedUser : following) {
+			if (followedUser.getUsername().equals(username)) {
+				isFollowing = true;
+			}
+		}
+		boolean isSelfPage = loggedInUser.getUsername().equals(username);
+		model.addAttribute("isSelfPage", isSelfPage);
+		model.addAttribute("following", isFollowing);
+		model.addAttribute("chirpList", chirps);
+		model.addAttribute("user", user);
+		model.addAttribute("title",
+				user.getFirstName() + " " + user.getLastName() + " (@" + user.getUsername() + ") | Chirper");
+		return "user";
+	}
+
 	@GetMapping(value = "/users")
 	public String getUsers(@RequestParam(value = "filter", required = false) String filter, Model model) {
 		List<User> users = new ArrayList<User>();
@@ -75,16 +76,16 @@ public class UserController {
 
 		return "users";
 	}
-	
+
 	private void SetChirpCounts(List<User> users, Model model) {
-	    HashMap<String,Integer> chirpCounts = new HashMap<>();
-	    for (User user : users) {
-	        List<ChirpDisplay> chirps = chirpService.findAllByUser(user);
-	        chirpCounts.put(user.getUsername(), chirps.size());
-	    }
-	    model.addAttribute("chirpCounts", chirpCounts);
+		HashMap<String, Integer> chirpCounts = new HashMap<>();
+		for (User user : users) {
+			List<ChirpDisplay> chirps = chirpService.findAllByUser(user);
+			chirpCounts.put(user.getUsername(), chirps.size());
+		}
+		model.addAttribute("chirpCounts", chirpCounts);
 	}
-	
+
 	private void SetFollowingStatus(List<User> users, List<User> usersFollowing, Model model) {
 		HashMap<String, Boolean> followingStatus = new HashMap<>();
 		String username = userService.getLoggedInUser().getUsername();

@@ -10,8 +10,11 @@ import com.julia.chirper.model.User;
 
 @Repository
 public interface ChirpRepository extends CrudRepository<Chirp, Long> {
-    List<Chirp> findAllByOrderByCreatedAtDesc();
-    List<Chirp> findAllByUserOrderByCreatedAtDesc(User user);
-    List<Chirp> findAllByUserInOrderByCreatedAtDesc(List<User> users);
-    List<Chirp> findByTags_PhraseOrderByCreatedAtDesc(String phrase);
+	List<Chirp> findAllByOrderByCreatedAtDesc();
+
+	List<Chirp> findAllByUserOrderByCreatedAtDesc(User user);
+
+	List<Chirp> findAllByUserInOrderByCreatedAtDesc(List<User> users);
+
+	List<Chirp> findByTags_PhraseOrderByCreatedAtDesc(String phrase);
 }

@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ChirpDisplay {
-    private User user;
-    private String message;
-    private String date;
-    private List<Tag> tags;
+	private User user;
+	private String message;
+	private String date;
+	private List<Tag> tags;
 }

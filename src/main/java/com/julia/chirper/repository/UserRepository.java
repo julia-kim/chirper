@@ -7,5 +7,5 @@ import com.julia.chirper.model.User;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
-    User findByUsername(String username);
+	User findByUsername(String username);
 }

@@ -29,28 +29,28 @@ public class ChirpController {
 
 	@Autowired
 	private ChirpService chirpService;
-	
+
 	@Autowired
 	private TagRepository tagRepository;
-	
-	@GetMapping(value = { "/home"})
-    public String getFeed(@RequestParam(value = "filter", required = false) String filter, Model model) {
-        User loggedInUser = userService.getLoggedInUser();
-        List<ChirpDisplay> chirps = new ArrayList<>();
-        if (filter == null) {
-            filter = "all";
-        }
-        if (filter.equalsIgnoreCase("following")) {
-            List<User> following = loggedInUser.getFollowing();
-            chirps = chirpService.findAllByUsers(following);
-            model.addAttribute("filter", "following");
-        } else {
-            chirps = chirpService.findAll();
-            model.addAttribute("filter", "all");
-        }
-        model.addAttribute("chirpList", chirps);
-        return "feed";
-    }
+
+	@GetMapping(value = { "/home" })
+	public String getFeed(@RequestParam(value = "filter", required = false) String filter, Model model) {
+		User loggedInUser = userService.getLoggedInUser();
+		List<ChirpDisplay> chirps = new ArrayList<>();
+		if (filter == null) {
+			filter = "all";
+		}
+		if (filter.equalsIgnoreCase("following")) {
+			List<User> following = loggedInUser.getFollowing();
+			chirps = chirpService.findAllByUsers(following);
+			model.addAttribute("filter", "following");
+		} else {
+			chirps = chirpService.findAll();
+			model.addAttribute("filter", "all");
+		}
+		model.addAttribute("chirpList", chirps);
+		return "feed";
+	}
 
 	@GetMapping(value = "/new")
 	public String getChirpForm(Model model) {
@@ -71,20 +71,20 @@ public class ChirpController {
 		}
 		return "new";
 	}
-	
+
 	@GetMapping(value = "/tags/{tag}")
-	public String getChirpsByTag(@PathVariable(value="tag") String tag, Model model) {
-	    List<ChirpDisplay> chirps = chirpService.findAllWithTag(tag);
-	    model.addAttribute("chirpList", chirps);
-	    model.addAttribute("tag", tag);
-	    model.addAttribute("title", "#" + tag + " | Chirper");
-	    return "tagged";
+	public String getChirpsByTag(@PathVariable(value = "tag") String tag, Model model) {
+		List<ChirpDisplay> chirps = chirpService.findAllWithTag(tag);
+		model.addAttribute("chirpList", chirps);
+		model.addAttribute("tag", tag);
+		model.addAttribute("title", "#" + tag + " | Chirper");
+		return "tagged";
 	}
-	
+
 	@GetMapping(value = "/tags")
-    public String getTags(Model model) {
-    	List<Tag> tag = (List<Tag>)tagRepository.findAll();
-    	model.addAttribute("tagList", tag);
-    	return "tags";
-    }
+	public String getTags(Model model) {
+		List<Tag> tag = (List<Tag>) tagRepository.findAll();
+		model.addAttribute("tagList", tag);
+		return "tags";
+	}
 }

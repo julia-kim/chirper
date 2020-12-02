@@ -20,14 +20,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 public class Tag {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "tag_id")
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "tag_id")
+	private Long id;
 
-    private String phrase;
+	private String phrase;
 
-    @ManyToMany(mappedBy = "tags")
-    private List<Chirp> chirps;
-
+	@ManyToMany(mappedBy = "tags")
+	private List<Chirp> chirps;
 }
