@@ -87,6 +87,7 @@ public class ChirpController {
 	public String getTags(Model model) {
 		List<Tag> tag = (List<Tag>) tagRepository.findAll();
 		model.addAttribute("tagList", tag);
+		model.addAttribute("title", "Hashtags | Chirper");
 		return "tags";
 	}
 }

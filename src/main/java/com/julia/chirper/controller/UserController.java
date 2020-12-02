@@ -70,7 +70,8 @@ public class UserController {
 			model.addAttribute("filter", "all");
 		}
 		model.addAttribute("users", users);
-
+		model.addAttribute("title", "All Users | Chirper");
+		
 		SetChirpCounts(users, model);
 		SetFollowingStatus(users, usersFollowing, model);
 
