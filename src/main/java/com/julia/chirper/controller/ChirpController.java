@@ -61,13 +61,13 @@ public class ChirpController {
 		return "new";
 	}
 
-	@PostMapping(value = "/chirps")
+	@PostMapping(value = "/new")
 	public String submitChirpForm(@Valid Chirp chirp, BindingResult bindingResult, Model model) {
 		User user = userService.getLoggedInUser();
 		if (!bindingResult.hasErrors()) {
 			chirp.setUser(user);
 			chirpService.save(chirp);
-			model.addAttribute("successMessage", "Chirp successfully created!");
+			model.addAttribute("successMessage", "Your Chirp was sent.");
 			model.addAttribute("chirp", new Chirp());
 			model.addAttribute("title", "New Chirp | Chirper");
 		}
