@@ -1,28 +1,54 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
   <head th:replace="fragments/components :: head"></head>
   <body>
     <div th:replace="fragments/components :: header"></div>
+    <div class="banner"></div>
     <div class="container">
-      <h2>Chirps</h2>
-      <div class="user-avatar-bg">
-        <i class="fas fa-user fa-7x user-avatar"></i>
+      <div class="banner-bar">	
+        <div class="user-avatar-bg">
+          <i class="fas fa-user fa-7x user-avatar"></i>
+        </div>
       </div>
-      <div align="center" th:if="${chirpList.isEmpty()}">
-	    <p>
-	      <strong class="d-block">@user hasn&#39;t Chirped yet</strong>
-		  When they do, their Chirps will show up here.
-		</p>
-      </div>
-      <div th:each="chirp:${chirpList}">
-        <h5>
-          @<span th:text="${chirp.user.username}"></span>
-          <small th:text="${chirp.date}"></small>
-        </h5>
-        <p th:utext="${chirp.message}"></p>
+      <div class="row">
+        <div class="col-3 pt-1">
+          <h4 class="h4"><span th:text="${user.firstName}"/> <span th:text="${user.lastName}"/></h4>
+          <span class="user-details"><a th:href="@{/users/} + ${user.username}">@<span th:text="${user.username}"/></a></span>
+		      <span class="user-details"><i class="far fa-calendar-alt"></i> Joined <span th:text="${#dates.format(user.createdAt, 'MMMM yyyy')}"></span></span>
+        </div>
+        <div class="col">
+          <ul class="nav nav-tabs">
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" href="/home" th:classappend="${filter == 'all' ? 'active' : '' }">All</a>
+            </li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" href="/home?filter=following" th:classappend="${filter == 'following' ? 'active' : '' }">Following</a>
+            </li>
+          </ul>
+          <div class="list-group">
+            <div class="list-group-item list-group-item-action" th:each="chirp:${chirpList}">
+              <div class="d-flex w-100 justify-content-between">
+                <span class="user-details">
+                  <a th:href="@{/users/} + ${user.username}">@<span th:text="${chirp.user.username}"/></a> &middot; 
+                  <span th:text="${chirp.date}"></span>
+                </span>
+              </div>
+              <p th:utext="${chirp.message}"></p>
+            </div>
+          </div>
+          <div class="list-group" th:if="${#lists.isEmpty(chirpList) and filter == 'all'}">
+            <div class="list-group-item list-group-item">
+             <h3>No chirps have been created yet</h3>
+            </div>
+          </div>
+          <div class="list-group" th:if="${#lists.isEmpty(chirpList) and filter == 'following'}">
+            <div class="list-group-item list-group-item">
+              <h3>No chirps have been created by your followers</h3>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div th:replace="fragments/components :: footer"/>
     <div th:replace="fragments/components :: scripts"/>
   </body>
 </html>
