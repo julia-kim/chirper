@@ -48,7 +48,9 @@ public class ChirpController {
 			chirps = chirpService.findAll();
 			model.addAttribute("filter", "all");
 		}
+		model.addAttribute("user", loggedInUser);
 		model.addAttribute("chirpList", chirps);
+		model.addAttribute("title", "Home | Chirper");
 		return "feed";
 	}
 
