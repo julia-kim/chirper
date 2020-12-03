@@ -90,7 +90,7 @@ public class ChirpService {
 			}
 			for (String tag : tags) {
 				message = message.replaceAll(tag,
-						"<a class=\"tag\" href=\"/chirps/" + tag.substring(1).toLowerCase() + "\">" + tag + "</a>");
+						"<a class=\"tag\" href=\"/tags/" + tag.substring(1).toLowerCase() + "\">" + tag + "</a>");
 			}
 			chirp.setMessage(message);
 		}
