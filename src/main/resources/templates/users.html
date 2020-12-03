@@ -19,40 +19,44 @@
         <div class="list-group-item list-group-item-action" th:each="user:${users}">
           <div class="row">
             <div class="col-6">
-              <h5 class="mb-1">
-                <a th:href="@{/users/} + ${user.username}">@<span th:text="${user.username}"></span></a>
-              </h5>
-              <h5 class="mb-1">
+              <h4 class="h4 mb-0">
                 <span th:text="${user.firstName}"></span>
                 <span th:text="${user.lastName}"></span>
                 <span th:if="${!followingStatus.containsKey(user.username)}">(Me)</span>
-              </h5>
+              </h4>
+              <span class="mb-0">
+                <a th:href="@{/users/} + ${user.username}">@<span th:text="${user.username}"></span></a>
+              </span>
             </div>
             <div class="col text-right">
-              <h5 class="mb-1">
-                <span th:text="${chirpCounts.get(user.username)}"></span> chirps
-              </h5>
+              <small class="mb-1 mr-1">
+                <span th:text="${chirpCounts.get(user.username)}"></span> Chirps
+              </small>
               <form th:action="@{/follow/} + ${user.username}" th:if="${followingStatus.containsKey(user.username) && !followingStatus.get(user.username)}" method="post">
-                <button type="Submit" class="btn btn-md btn-success float-right">
+                <button type="Submit" class="btn btn-md btn-chirper-inverse float-right">
                   Follow
                 </button>
               </form>
               <form th:action="@{/unfollow/} + ${user.username}" th:if="${followingStatus.containsKey(user.username) && followingStatus.get(user.username)}" method="post">
-                <button type="Submit" class="btn btn-md btn-primary unfollow_btn float-right">
+                <button type="Submit" class="btn btn-md btn-chirper unfollow_btn float-right">
                   Following
                 </button>
               </form>
             </div>
-          <div>
+          </div>
         </div>
       </div>
-      <div th:if="${#lists.isEmpty(users) and filter == 'followers'}">
-        <h3>You don't have any followers</h3>
+      <div class="list-group" th:if="${#lists.isEmpty(users) and filter == 'followers'}">
+        <div class="list-group-item list-group-item text-center">
+          <h4 class="h4">You don't have any followers</h4>
+        </div>
       </div>
-      <div th:if="${#lists.isEmpty(users) and filter == 'following'}">
-        <h3>You're not following anyone</h3>
+      <div class="list-group" th:if="${#lists.isEmpty(users) and filter == 'following'}">
+        <div class="list-group-item list-group-item text-center">
+          <h4 class="h4">You are not following anyone</h4>
+        </div>
       </div>
     </div>
-    <div th:replace="fragments/components :: scripts"/>
+    <div th:replace="fragments/components :: scripts"></div>
   </body>
 </html>

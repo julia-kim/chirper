@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
   <head th:replace="fragments/components :: head"></head>
   <body>
     <div class="form-container mx-auto mt-5">
       <h3 class="h3 text-center mb-3">Log in to Chirper</h3> 
       <form th:action="@{/login}" method="post">
-        <div align="center" th:if="${param.error}">
-          <h4 style="color: red">Login unsuccessful.</h4>
+        <div class="text-center validation-message" th:if="${param.error}">
+          <span>Login unsuccessful.</span>
         </div>
         <input type="text" id="username" name="username" th:placeholder="Username" class="form-control"/> <br/>
         <input type="password" th:placeholder="Password" id="password" name="password" class="form-control"/> <br/>

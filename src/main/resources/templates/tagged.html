@@ -5,20 +5,21 @@
 		<div th:replace="fragments/components :: header"></div>
 		<div class="container">
 			<h2>
-				Chirps containing #<span th:text="${tag}"></span>
+				#<span th:text="${tag}"></span>
 			</h2>
 			<div class="list-group" th:each="chirp:${chirpList}">
 				<div class="list-group-item list-group-item-action">
-					<div class="d-flex w-100 justify-content-between">
-						<a class="username" th:href="@{/users/} + ${chirp.user.username}">@<span
-							th:text="${chirp.user.username}"></span></a>
-						<small th:text="${chirp.date}"></small>
+					<div>
+						<a th:href="@{/users/} + ${chirp.user.username}">
+							@<span th:text="${chirp.user.username}"></span>
+						</a> &middot;
+						<span th:text="${chirp.date}"></span>
 					</div>
 					<p class="mb-1" th:utext="${chirp.message}"></p>
 				</div>
 			</div>
-			<div th:if="${#lists.isEmpty(chirpList)}">
-				<h3>No chirps contain this hashtag</h3>
+			<div class="text-center" th:if="${#lists.isEmpty(chirpList)}">
+				<h4 class="h4">No chirps contain this hashtag</h4>
 			</div>
 		</div>
 	</body>

@@ -6,6 +6,7 @@ $light-grey: rgb(170, 184, 194);
 $extra-light-grey: rgb(225, 232, 237);
 $extra-extra-light-grey: rgb(245, 248, 250);
 $white: rgb(255, 255, 255);
+$red: rgb(224, 36, 94);
 
 /* ========
     GLOBAL 
@@ -26,6 +27,10 @@ body {
 /* =========
     GENERAL 
    ========= */
+   
+.container {
+  padding: 0;
+}
 
 .bg-blue {
   background-color: $brand-primary;
@@ -36,16 +41,12 @@ body {
   max-width: 380px;
 }
 
-a.username {
-  color: #00aced;
+.validation-message {
+  color: $red;
 }
 
-a.tag {
-  color: #0084b4;
-}
-
-.container {
-  padding: 0;
+.footer {
+  font-size: 0.813rem;
 }
 
 /* ============
@@ -55,12 +56,24 @@ a.tag {
 .navbar-brand {
   color: $brand-primary;
   font-weight: 800;
+
+  &:hover {
+    color: $brand-primary;
+  }
 }
 
-.nav-link {
-  color: $black;
-  font-size: 1.125rem;
-  font-weight: 700;
+.navbar {
+  .nav-link {
+    color: $black;
+    font-size: 1.125rem;
+    font-weight: 700;
+
+    &:hover {
+      background-color: rgba($brand-primary, 0.1);
+      border-radius: 999px;
+      color: $brand-primary;
+    }
+  }
 }
 
 /* ============
@@ -109,7 +122,7 @@ a.tag {
    ====== */
 
 .card {
-  width: 33.750rem;
+  width: 33.75rem;
 }
 
 .card-header {
@@ -132,13 +145,8 @@ textarea.form-control {
 .h1,
 .h2,
 .h3,
-.h4,
-.h5 {
+.h4 {
   font-weight: 700;
-}
-
-.h6 {
-  font-weight: 600;
 }
 
 .h2 {
@@ -154,6 +162,15 @@ textarea.form-control {
   font-size: 1.125rem;
 }
 
+.h5 {
+  font-size: 1.125rem;
+  font-weight: 800;
+}
+
+.h6 {
+  font-weight: 600;
+}
+
 /* =======
     FORMS
    ======= */
@@ -163,13 +180,75 @@ textarea.form-control {
   width: 600px;
 }
 
+input.form-control {
+  background-color: $extra-extra-light-grey;
+  border-bottom: 2px solid $dark-grey;
+  border-left: 0;
+  border-radius: 0;
+  border-right: 0;
+  border-top: 0;
+
+  &:focus {
+    background-color: rgba($brand-primary, 0.1);
+
+    &::placeholder {
+      color: $brand-primary;
+    }
+  }
+}
+
 /* =========
     BUTTONS 
    ========= */
 
-.btn-chirper {
+@mixin btn-style {
+  border: 1px solid $brand-primary;
   border-radius: 999px;
   font-weight: 700;
+  text-decoration: none;
+}
+
+.btn-chirper {
+  @include btn-style;
+  background-color: $brand-primary;
+  color: $white;
+
+  &:hover,
+  &:active,
+  &.active,
+  &:focus {
+    background-color: rgb(26, 145, 218);
+    color: $white;
+  }
+}
+
+.btn-chirper-inverse {
+  @include btn-style;
+  background-color: $white;
+  color: $brand-primary;
+
+  &:hover,
+  &:active,
+  &.active,
+  &:focus {
+    background-color: rgba($brand-primary, 0.1);
+    color: $brand-primary;
+  }
+}
+
+.btn-chirper-danger {
+  @include btn-style;
+  background-color: $red;
+  border: 1px solid $red;
+  color: $white;
+
+  &:hover,
+  &:active,
+  &.active,
+  &:focus {
+    background-color: $red;
+    color: $white;
+  }
 }
 
 /* ==============

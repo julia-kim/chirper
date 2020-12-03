@@ -12,17 +12,17 @@
       </div>
       <div class="row">
         <div class="col-3 pt-1">
-          <h4 class="h4"><span th:text="${user.firstName}"/> <span th:text="${user.lastName}"/></h4>
+          <h5 class="h5"><span th:text="${user.firstName}"/> <span th:text="${user.lastName}"/></h5>
           <span class="user-details"><a th:href="@{/users/} + ${user.username}">@<span th:text="${user.username}"/></a></span>
 		      <span class="user-details"><i class="far fa-calendar-alt"></i> Joined <span th:text="${#dates.format(user.createdAt, 'MMMM yyyy')}"></span></span>
         </div>
         <div class="col">
           <ul class="nav nav-tabs">
-            <li class="nav-item" role="presentation">
-              <a class="nav-link" href="/home" th:classappend="${filter == 'all' ? 'active' : '' }">All</a>
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{/home}" role="presentation" th:classappend="${filter == 'all' ? 'active' : '' }">All</a>
             </li>
-            <li class="nav-item" role="presentation">
-              <a class="nav-link" href="/home?filter=following" th:classappend="${filter == 'following' ? 'active' : '' }">Following</a>
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{/home?filter=following}" role="presentation" th:classappend="${filter == 'following' ? 'active' : '' }">Following</a>
             </li>
           </ul>
           <div class="list-group">
@@ -37,13 +37,14 @@
             </div>
           </div>
           <div class="list-group" th:if="${#lists.isEmpty(chirpList) and filter == 'all'}">
-            <div class="list-group-item list-group-item">
-             <h3>No chirps have been created yet</h3>
+            <div class="list-group-item list-group-item text-center">
+                <h4 class="h4">No Chirps have been created yet</h4>
+                <a th:href="@{/new}" class="btn btn-chirper">Chirp Now</a>
             </div>
           </div>
           <div class="list-group" th:if="${#lists.isEmpty(chirpList) and filter == 'following'}">
-            <div class="list-group-item list-group-item">
-              <h3>No chirps have been created by your followers</h3>
+            <div class="list-group-item list-group-item text-center">
+              <h4 class="h4">No Chirps have been created by your followers</h4>
             </div>
           </div>
         </div>

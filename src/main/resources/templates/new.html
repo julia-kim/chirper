@@ -9,7 +9,7 @@
           <h6 class="h6 card-title text-center mb-0">Compose new Chirp</h6>
         </div>
         <div class="card-body">
-          <form th:action="@{/chirps}" th:object="${chirp}" method="post" autocomplete="off">
+          <form th:action="@{/new}" th:object="${chirp}" method="post" autocomplete="off">
             <div class="form-group">
               <textarea rows="5" th:field="*{message}" placeholder="What's happening?" class="form-control"></textarea>
               <label th:if="${#fields.hasErrors('message')}" th:errors="*{message}" class="validation-message"></label>	
@@ -21,11 +21,15 @@
             </div>
           </form>
         </div>
-        <div th:if="${successMessage}">
-          <h3><span class="text-success" th:utext="${successMessage}"></span></h3>
-        </div> 
       </div>
     </div>
+    <div class="w-25 mx-auto alert alert-primary alert-dismissible fade show" role="alert" th:if="${successMessage}">
+      <span th:utext="${successMessage}"/>
+      <a th:href="@{/home}"><strong>View</strong></a>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div> 
     <div th:replace="fragments/components :: scripts"/>
   </body>
 </html>
